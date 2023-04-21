@@ -1,6 +1,5 @@
 package com.octopodius.OctoAPI.entities;
 
-import com.octopodius.OctoAPI.dtos.users.UserRegisterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Table(name = "users")
 @Entity(name = "User")
