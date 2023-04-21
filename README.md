@@ -2,16 +2,16 @@
 
 This is the API for Octopodius project.
 
-- [0.0 Technologies](#0-technologies)
-- [1.0 Architecture](#1-architecture)
+- [0 Technologies](#0-technologies)
+- [1 Architecture](#1-architecture)
   - [1.1 Why many DTOs?](#11-why-many-dtos)
   - [1.2 Authorization and Authentication](#12-authorization-and-authentication)
-- [2.0 Infrastructure](#2-infrastructure)
+- [2 Infrastructure](#2-infrastructure)
   - [2.1 Database Diagram](#21-database-diagram)
   - [2.2 Docker](#22-docker)
   - [2.3 Cloud Services](#23-cloud-services)
 
-## 0. Technologies
+## 0 Technologies
 
 [<img height="32em" alt="Java 17" src="https://www.svgrepo.com/show/353924/java.svg" />][java]
 [<img height="32em" alt="Spring Framework" src="https://www.svgrepo.com/show/376350/spring.svg" />][spring]
@@ -33,7 +33,7 @@ Organization of project, architecture, and improve the security of application d
 
 </details>
 
-## 2. Infrastructure
+## 2 Infrastructure
 
 #### 2.1 Database diagram
 
