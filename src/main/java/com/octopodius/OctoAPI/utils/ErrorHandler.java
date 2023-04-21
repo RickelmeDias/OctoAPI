@@ -17,26 +17,26 @@ import java.util.regex.Pattern;
 public class ErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity handlerNotFound() {
+    public ResponseEntity<?> handlerNotFound() {
         return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(SQLException.class)
-    public ResponseEntity handlerSQLExceptionsBadRequest(SQLException ex) {
-        String message = "Internal Exception Error";
+    public ResponseEntity<List<ErrorHandlerDTO>> handlerSQLExceptionsBadRequest(SQLException ex) {
         String field = "Not Determined";
+        String message = "Internal Exception Error";
         List<ErrorHandlerDTO> errList = new LinkedList<ErrorHandlerDTO>();
 
         boolean isDuplicateKey = ex.getMessage().toLowerCase().contains("duplicate") && ex.getMessage().toLowerCase().contains("key");
 
         if (isDuplicateKey) {
             message = "duplicate";
+            // Process to get the name of duplicated key (e.g. username)
             Pattern pattern = Pattern.compile("\\((.*?)\\)");
             Matcher matcher = pattern.matcher(ex.getMessage());
-
             if (matcher.find()) {
-                String duplicateKey = matcher.group(1);
-                field = duplicateKey;
+                String duplicateKeyName = matcher.group(1);
+                field = duplicateKeyName;
             }
         }
 
@@ -45,7 +45,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity methodsArgumentNotValidBadRequest(MethodArgumentNotValidException ex) {
+    public ResponseEntity<List<ErrorHandlerDTO>> methodsArgumentNotValidBadRequest(MethodArgumentNotValidException ex) {
         List<FieldError> errors = ex.getFieldErrors();
         return ResponseEntity.badRequest().body( errors.stream().map(ErrorHandlerDTO::new).toList() );
     }

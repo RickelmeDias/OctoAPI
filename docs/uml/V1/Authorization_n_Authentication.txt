@@ -1,0 +1,16 @@
+@startuml
+!theme mars
+skinparam sequenceMessageAlign center
+
+actor       User_Bob     
+User_Bob->OctoAPI:       Authentication HTTP Request { "username": "bob", "password": "123" }
+
+database    Database     as OctoDB
+OctoAPI->OctoDB:         SQL Select the user Bob
+OctoAPI<-OctoDB:         Return data about Bob
+note over OctoAPI:       **OctoAPI** Generate JWT Token 
+User_Bob<-OctoAPI:       Return **JWT Token**
+
+User_Bob->OctoAPI:       HTTP Request + HEADER Authorization: Bearer **JWT Token**
+note over OctoAPI:       **OctoAPI** Valid Token to \nAccept or Not the Request
+@enduml
