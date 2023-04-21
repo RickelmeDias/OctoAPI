@@ -27,6 +27,14 @@ Organization of project, architecture, and improve the security of application d
 
 ###### 1.2.1 **JWT Token**
 
+#### 1.3 Security
+
+###### 1.3.1 **Security Configurations**
+
+- CSRF: Disable the protection against Cross-Site Request Forgery, because the JWT Token protect the application against it (redundancy if it is enabled and use JWT Token);
+- STATELESS Authentication: The application uses JWT Token, so the configuration is STATELESS instead the default (STATEFULL);
+-
+
 <details>
 
 ![Authorization](./docs/uml/V1/Authorization_n_Authentication.png)
