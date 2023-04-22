@@ -1,4 +1,4 @@
-package com.octopodius.OctoAPI.services.users.api.users;
+package com.octopodius.OctoAPI.services.api.users;
 
 import com.octopodius.OctoAPI.dtos.users.req.UserRegisterReqDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserRegisterResDTO;

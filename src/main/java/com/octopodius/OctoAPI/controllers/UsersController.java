@@ -3,7 +3,7 @@ package com.octopodius.OctoAPI.controllers;
 import com.octopodius.OctoAPI.dtos.users.req.UserRegisterReqDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserRegisterResDTO;
 import com.octopodius.OctoAPI.entities.User;
-import com.octopodius.OctoAPI.services.users.api.users.UserService;
+import com.octopodius.OctoAPI.services.api.users.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UsersController {
 
     @Autowired
