@@ -1,6 +1,9 @@
 package com.octopodius.OctoAPI.controllers;
 
 import com.octopodius.OctoAPI.dtos.authentication.req.AuthenticationReqDTO;
+import com.octopodius.OctoAPI.dtos.authentication.res.AuthenticationTokenResDTO;
+import com.octopodius.OctoAPI.entities.User;
+import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +22,16 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager manager;
 
-    @PostMapping
-    public ResponseEntity login(@RequestBody @Valid AuthenticationReqDTO authReqDto) {
-        var token = new UsernamePasswordAuthenticationToken(authReqDto.username(), authReqDto.password());
-        var auth = manager.authenticate(token);
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<AuthenticationTokenResDTO> login(@RequestBody @Valid AuthenticationReqDTO authReqDto) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authReqDto.username(), authReqDto.password());
+        Authentication auth = manager.authenticate(token);
+        User user = (User) auth.getPrincipal();
+        AuthenticationTokenResDTO tokenRes = new AuthenticationTokenResDTO(jwtTokenService.generateToken(user));
+        return ResponseEntity.ok(tokenRes);
     }
 
 }
