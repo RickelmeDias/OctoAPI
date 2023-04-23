@@ -1,4 +1,5 @@
 # OctoAPI
+###### Rest API
 
 This is the API for Octopodius project.
 
@@ -27,19 +28,22 @@ Organization of project, architecture, and improve the security of application d
 
 ###### 1.2.1 **JWT Token**
 
-#### 1.3 Security
-
-###### 1.3.1 **Security Configurations**
-
-- CSRF: Disable the protection against Cross-Site Request Forgery, because the JWT Token protect the application against it (redundancy if it is enabled and use JWT Token);
-- STATELESS Authentication: The application uses JWT Token, so the configuration is STATELESS instead the default (STATEFULL);
--
-
 <details>
 
 ![Authorization](./docs/uml/V1/Authorization_n_Authentication.png)
 
 </details>
+
+#### 1.3 Security
+
+###### 1.3.1 **Security Configurations**
+
+- CSRF: Disable the protection against Cross-Site Request Forgery, because the JWT Token protect the application against it (redundancy if it is enabled and use JWT Token);
+- Stateless Authentication: The application uses JWT Token, so the configuration is STATELESS instead the default (STATEFULL);
+- Filters added (SecurityFilter.class): Spring Filters to check the JWT Token, validate and identify the user;
+- Password Hash: BCrypt implemented to hash the user password;
+- Spring Security: Configurations made using the Spring Security.
+
 
 ## 2 Infrastructure
 
