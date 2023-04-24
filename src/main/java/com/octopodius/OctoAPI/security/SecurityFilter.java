@@ -26,9 +26,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private String getTokenFromHeader(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader == null) {
-            throw new RuntimeException("Invalid Authorization");
+        if (authorizationHeader != null) {
+            return authorizationHeader.replace("Bearer ", "");
         }
-        return authorizationHeader.replace("Bearer ", "");
+        return null;
     }
 }
