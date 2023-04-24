@@ -27,7 +27,7 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<AuthenticationTokenResDTO> login(@RequestBody @Valid AuthenticationReqDTO authReqDto) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authReqDto.username(), authReqDto.password());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authReqDto.email(), authReqDto.password());
         Authentication auth = manager.authenticate(token);
         User user = (User) auth.getPrincipal();
         AuthenticationTokenResDTO tokenRes = new AuthenticationTokenResDTO(jwtTokenService.generateToken(user));

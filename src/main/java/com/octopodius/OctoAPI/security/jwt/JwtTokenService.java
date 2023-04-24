@@ -21,13 +21,13 @@ public class JwtTokenService {
 
     public String generateToken(User user) throws JWTCreationException {
         Algorithm algorithm = Algorithm.HMAC256(secret_jwt);
-        String token = JWT.create()
+        return JWT.create()
                 .withIssuer("OctoAPI")
-                .withSubject(user.getUsername())
+                .withSubject(user.getEmail())
                 .withClaim("id", user.getId())
+                .withClaim("username", user.getUsername())
                 .withExpiresAt(expirationDate())
                 .sign(algorithm);
-        return token;
     }
 
     public String getSubject(String token) {

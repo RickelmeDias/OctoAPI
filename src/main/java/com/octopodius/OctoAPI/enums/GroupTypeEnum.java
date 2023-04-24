@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum GroupTypeEnum {
     SUPER("SUPER"),
-    ADMIN("ADMIN");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String name;
 }

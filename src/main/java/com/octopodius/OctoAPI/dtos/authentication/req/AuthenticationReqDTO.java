@@ -4,8 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record AuthenticationReqDTO(
-        @NotBlank(message = "username is invalid")
-        String username,
+        @NotBlank(message = "email is invalid")
+        @Email
+        String email,
         @NotBlank(message = "password is invalid")
         String password){
 }

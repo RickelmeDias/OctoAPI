@@ -30,8 +30,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         String token = getTokenFromHeader(request);
 
         if (token != null) {
-            String username = jwtTokenService.getSubject(token);
-            UserDetails user = repository.findByUsername(username);
+            String email = jwtTokenService.getSubject(token);
+            UserDetails user = repository.findByEmail(email);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
