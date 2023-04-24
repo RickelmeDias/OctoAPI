@@ -12,7 +12,8 @@ CREATE TABLE users (
 	username VARCHAR (39) UNIQUE NOT NULL,
 	password VARCHAR (60) NOT NULL,
 	email VARCHAR (254) UNIQUE NOT NULL,
-	group_id integer,
+	is_active BOOLEAN NOT NULL,
+	group_id INTEGER,
 	created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     CONSTRAINT fk_groups_on_users

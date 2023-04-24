@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -48,6 +51,7 @@ public class User implements UserDetails {
     protected void prePersist() {
         if (this.createdAt == null) createdAt = LocalDateTime.now();
         if (this.updatedAt == null) updatedAt = LocalDateTime.now();
+        if (this.isActive == null) this.isActive = true;
     }
 
     @PreUpdate
@@ -71,22 +75,22 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.isActive;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.isActive;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.isActive;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isActive;
     }
 
     @Override
