@@ -4,6 +4,7 @@ import com.octopodius.OctoAPI.daos.GroupRepository;
 import com.octopodius.OctoAPI.daos.UserRepository;
 import com.octopodius.OctoAPI.dtos.users.req.UserRegisterReqDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserRegisterResDTO;
+import com.octopodius.OctoAPI.dtos.users.res.UserResDTO;
 import com.octopodius.OctoAPI.entities.Group;
 import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.enums.GroupTypeEnum;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,7 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return repository.findAll();
+    public List<UserResDTO> getAll() {
+        List<User> users = repository.findAll();
+        return users.stream().map(user -> new UserResDTO(user.getId(), user.getUsername(), user.getEmail())).collect(Collectors.toList());
     }
 }

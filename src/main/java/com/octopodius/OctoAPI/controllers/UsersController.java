@@ -2,6 +2,7 @@ package com.octopodius.OctoAPI.controllers;
 
 import com.octopodius.OctoAPI.dtos.users.req.UserRegisterReqDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserRegisterResDTO;
+import com.octopodius.OctoAPI.dtos.users.res.UserResDTO;
 import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.services.api.users.UserService;
 import jakarta.validation.Valid;
@@ -31,7 +32,7 @@ public class UsersController {
 
     @GetMapping
     @Transactional
-    List<User> getAll() {
+    List<UserResDTO> getAll() {
         return service.getAll();
     }
 }
