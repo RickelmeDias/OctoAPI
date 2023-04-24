@@ -20,7 +20,11 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getTokenFromHeader(request);
-        jwtTokenService.getSubject(token);
+
+        if (token != null) {
+            jwtTokenService.getSubject(token);
+        }
+
         filterChain.doFilter(request, response);
     }
 
