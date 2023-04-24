@@ -1,13 +1,10 @@
 package com.octopodius.OctoAPI.entities;
 
-import com.octopodius.OctoAPI.daos.GroupRepository;
-import com.octopodius.OctoAPI.enums.GroupTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

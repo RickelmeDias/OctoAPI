@@ -7,7 +7,6 @@ import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class AuthenticationController {
     @Autowired
-    private AuthenticationManager manager;
+    AuthenticationManager manager;
 
     @Autowired
-    private JwtTokenService jwtTokenService;
+    JwtTokenService jwtTokenService;
 
     @PostMapping
     public ResponseEntity<AuthenticationTokenResDTO> login(@RequestBody @Valid AuthenticationReqDTO authReqDto) {

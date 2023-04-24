@@ -1,7 +1,6 @@
 package com.octopodius.OctoAPI.security;
 
 import com.octopodius.OctoAPI.daos.UserRepository;
-import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,10 +19,10 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtTokenService jwtTokenService;
+    JwtTokenService jwtTokenService;
 
     @Autowired
-    private UserRepository repository;
+    UserRepository repository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
