@@ -6,6 +6,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.octopodius.OctoAPI.entities.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -42,10 +44,12 @@ public class JwtTokenService {
         }
     }
 
-    public String getEmailByAuthorizationHeader(String authorizationHeader) {
-        String token = authorizationHeader.replace("Bearer ", "");
-        String email = this.getSubject(token);
-        return email;
+    public String getUserEmail() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user == null) {
+            throw new RuntimeException("Invalid User");
+        }
+        return user.getEmail();
     }
 
     private Instant expirationDate() {
