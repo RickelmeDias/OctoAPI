@@ -4,6 +4,7 @@ import com.octopodius.OctoAPI.dtos.users.req.UserRegisterReqDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserRegisterResDTO;
 import com.octopodius.OctoAPI.dtos.users.res.UserResDTO;
 import com.octopodius.OctoAPI.entities.User;
+import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
 import com.octopodius.OctoAPI.services.api.users.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,29 @@ public class UsersController {
     @Autowired
     UserService service;
 
+    @Autowired
+    JwtTokenService jwtTokenService;
+
     @PostMapping
     @Transactional
-    public ResponseEntity<UserRegisterResDTO> register(@RequestBody @Valid UserRegisterReqDTO userDto, UriComponentsBuilder uriBuilder) {
-        UserRegisterResDTO userResponse = service.register(userDto);
+    public ResponseEntity<UserRegisterResDTO> createUser (@RequestBody @Valid UserRegisterReqDTO userDto, UriComponentsBuilder uriBuilder) {
+        UserRegisterResDTO userResponse = service.createUser(userDto);
         final URI uri = uriBuilder.path("/users/{id}").buildAndExpand(userResponse.id()).toUri();
         return ResponseEntity.created(uri).body(userResponse);
     }
 
+    @DeleteMapping
+    @Transactional
+    public ResponseEntity<?> deleteUser (@RequestHeader("Authorization") String authorizationHeader) {
+        String email = jwtTokenService.getEmailByAuthorizationHeader(authorizationHeader);
+        service.deleteUserByEmail(email);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     @Transactional
-    List<UserResDTO> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<UserResDTO>> getAllUsers() {
+        return ResponseEntity.ok(service.getAll());
     }
+
 }

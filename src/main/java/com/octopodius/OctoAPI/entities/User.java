@@ -1,10 +1,13 @@
 package com.octopodius.OctoAPI.entities;
 
+import com.octopodius.OctoAPI.daos.GroupRepository;
+import com.octopodius.OctoAPI.enums.GroupTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +23,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,7 +33,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -49,9 +51,9 @@ public class User implements UserDetails {
 
     @PrePersist
     protected void prePersist() {
+        if (this.isActive == null) this.isActive = true;
         if (this.createdAt == null) createdAt = LocalDateTime.now();
         if (this.updatedAt == null) updatedAt = LocalDateTime.now();
-        if (this.isActive == null) this.isActive = true;
     }
 
     @PreUpdate
@@ -59,11 +61,11 @@ public class User implements UserDetails {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public User (String username, String password, String email, Group group) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
+    public void deleteUserAndRemoveGroup(Group group) {
+        this.isActive = false;
         this.group = group;
+        this.password = "♞";
+        this.email = null;
     }
 
     @Override
@@ -101,5 +103,19 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
+    }
+
+
+    public User (String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public User (String username, String password, String email, Group group) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.group = group;
     }
 }

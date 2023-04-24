@@ -7,7 +7,9 @@ import com.octopodius.OctoAPI.dtos.users.res.UserResDTO;
 import java.util.List;
 
 public interface UserService {
-    UserRegisterResDTO register(UserRegisterReqDTO userDto);
+    UserRegisterResDTO createUser(UserRegisterReqDTO userDto);
 
     List<UserResDTO> getAll();
+
+    void deleteUserByEmail(String email);
 }

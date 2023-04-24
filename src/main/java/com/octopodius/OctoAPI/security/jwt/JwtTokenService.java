@@ -41,6 +41,13 @@ public class JwtTokenService {
             throw new RuntimeException("Invalid Authorization");
         }
     }
+
+    public String getEmailByAuthorizationHeader(String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        String email = this.getSubject(token);
+        return email;
+    }
+
     private Instant expirationDate() {
         return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));
     }

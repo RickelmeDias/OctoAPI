@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum GroupTypeEnum {
     SUPER("SUPER"),
     ADMIN("ADMIN"),
-    USER("USER");
+    USER("USER"),
+    DELETED("DELETED");
 
     private String name;
 }

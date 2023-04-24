@@ -29,11 +29,9 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public UserRegisterResDTO register(UserRegisterReqDTO userDto) {
-        final Group defaultGroup = groupRepository.findByName(GroupTypeEnum.USER);
-        User user = new User(userDto.username(), passwordEncoder.encode(userDto.password()), userDto.email(), defaultGroup);
+    public UserRegisterResDTO createUser(UserRegisterReqDTO userDto) {
+        User user = new User(userDto.username(), passwordEncoder.encode(userDto.password()), userDto.email(), groupRepository.findByName(GroupTypeEnum.USER));
         User registredUser = repository.save(user);
-
         return new UserRegisterResDTO(registredUser.getId(), registredUser.getUsername(), registredUser.getEmail());
     }
 
@@ -41,5 +39,12 @@ public class UserServiceImpl implements UserService {
     public List<UserResDTO> getAll() {
         List<User> users = repository.findAll();
         return users.stream().map(user -> new UserResDTO(user.getId(), user.getUsername(), user.getEmail())).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        User user = (User) repository.findByEmail(email);
+        Group deletedGroup = groupRepository.findByName(GroupTypeEnum.DELETED);
+        user.deleteUserAndRemoveGroup(deletedGroup);
     }
 }
