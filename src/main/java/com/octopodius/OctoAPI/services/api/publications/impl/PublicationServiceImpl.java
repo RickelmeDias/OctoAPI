@@ -30,6 +30,11 @@ public class PublicationServiceImpl implements PublicationService {
     public Publication create(PublicationCreateReqDTO publicationDto) {
         User userAuthor = (User) userRepository.findByEmail(jwtTokenService.getUserEmail());
         Publication.PublicationsId id = new Publication.PublicationsId(userAuthor.getUsername(), publicationDto.slug());
+
+        if (repository.findById_UsernameAuthorAndId_Slug(userAuthor.getUsername(), publicationDto.slug()) != null) {
+            throw new RuntimeException("you already published a topic with this slug");
+        }
+
         Publication pub = new Publication(id, userAuthor, publicationDto.title(), publicationDto.body(), publicationDto.category(), publicationDto.subCategory(),
                 publicationDto.tags(), true, null, null, null);
         return repository.save(pub);

@@ -34,11 +34,11 @@ public class Publication {
     private String body;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private CategoryTypeEnum category;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "sub_category")
+    @Column(name = "sub_category", nullable = false)
     private SubCategoryTypeEnum subCategory;
 
     @Column

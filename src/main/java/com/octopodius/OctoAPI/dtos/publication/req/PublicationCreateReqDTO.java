@@ -2,9 +2,10 @@ package com.octopodius.OctoAPI.dtos.publication.req;
 
 import com.octopodius.OctoAPI.enums.CategoryTypeEnum;
 import com.octopodius.OctoAPI.enums.SubCategoryTypeEnum;
-import com.octopodius.OctoAPI.utils.EnumValidators.ValueOfEnum;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ public record PublicationCreateReqDTO (
         @NotBlank(message = "slug is invalid")
         String slug,
 
-        @ValueOfEnum(enumClass = CategoryTypeEnum.class, message = "category is invalid")
+        @NotNull
         CategoryTypeEnum category,
 
-        @ValueOfEnum(enumClass = SubCategoryTypeEnum.class, message = "category is invalid")
+        @NotNull
         SubCategoryTypeEnum subCategory,
 
         List<String> tags

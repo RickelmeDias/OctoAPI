@@ -1,7 +1,9 @@
 package com.octopodius.OctoAPI.utils;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,6 +52,23 @@ public class ErrorHandler {
         return ResponseEntity.badRequest().body( errors.stream().map(ErrorHandlerDTO::new).toList() );
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<List<ErrorHandlerDTO>> httpNotReadableBadRequest(HttpMessageNotReadableException ex) {
+        String field = "Not Determined";
+        String message = "Internal Exception Error";
+
+        Throwable cause = ex.getCause();
+
+        if (cause instanceof InvalidFormatException) {
+            InvalidFormatException invalidFormatException = (InvalidFormatException) cause;
+            field = invalidFormatException.getPath().get(0).getFieldName();
+            message = "invalid value " +invalidFormatException.getValue().toString();
+        }
+
+        List<ErrorHandlerDTO> errList = new LinkedList<ErrorHandlerDTO>();
+        errList.add(new ErrorHandlerDTO(field, message));
+        return ResponseEntity.badRequest().body(errList);
+    }
 
     private record ErrorHandlerDTO(String field, String cause) {
         public ErrorHandlerDTO(FieldError errors) {

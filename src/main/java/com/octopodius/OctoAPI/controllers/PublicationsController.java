@@ -3,6 +3,7 @@ package com.octopodius.OctoAPI.controllers;
 import com.octopodius.OctoAPI.dtos.publication.req.PublicationCreateReqDTO;
 import com.octopodius.OctoAPI.entities.Publication;
 import com.octopodius.OctoAPI.services.api.publications.PublicationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class PublicationsController {
     PublicationService service;
 
     @PostMapping
-    public ResponseEntity<Publication> create(@RequestBody PublicationCreateReqDTO req) {
+    public ResponseEntity<Publication> create(@RequestBody @Valid PublicationCreateReqDTO req) {
         Publication pub = service.create(req);
         return ResponseEntity.status(HttpStatus.CREATED).body(pub);
     }
