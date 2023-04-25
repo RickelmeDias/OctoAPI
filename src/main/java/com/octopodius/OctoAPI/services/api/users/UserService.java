@@ -12,4 +12,6 @@ public interface UserService {
     List<UserResDTO> getAll();
 
     void deleteUserByEmail(String email);
+
+    UserResDTO getUserByEmail(String email);
 }

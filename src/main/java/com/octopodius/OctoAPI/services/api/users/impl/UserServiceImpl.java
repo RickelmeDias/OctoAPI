@@ -47,4 +47,10 @@ public class UserServiceImpl implements UserService {
         Group deletedGroup = groupRepository.findByName(GroupTypeEnum.DELETED);
         user.deleteUserAndRemoveGroup(deletedGroup);
     }
+
+    @Override
+    public UserResDTO getUserByEmail(String email) {
+        User user = (User) repository.findByEmail(email);
+        return new UserResDTO(user.getId(), user.getUsername(), user.getEmail());
+    }
 }

@@ -37,7 +37,7 @@ public class User implements UserDetails {
     private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     @Column(name = "is_active", nullable = false)
