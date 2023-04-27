@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record UserRegisterResDTO(
-        @NotNull
-        Integer id,
         @NotBlank
         String username,
         @NotBlank

@@ -33,7 +33,7 @@ public class UsersController {
     @Transactional
     public ResponseEntity<UserRegisterResDTO> createUser (@RequestBody @Valid UserRegisterReqDTO userDto, UriComponentsBuilder uriBuilder) {
         UserRegisterResDTO userResponse = service.createUser(userDto);
-        final URI uri = uriBuilder.path("/users/{id}").buildAndExpand(userResponse.id()).toUri();
+        final URI uri = uriBuilder.path("/users/{username}").buildAndExpand(userResponse.username()).toUri();
         return ResponseEntity.created(uri).body(userResponse);
     }
 

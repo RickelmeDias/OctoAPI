@@ -1,4 +1,4 @@
-package com.octopodius.OctoAPI.utils;
+package com.octopodius.OctoAPI.utils.documentation;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

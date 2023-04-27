@@ -1,8 +1,11 @@
 package com.octopodius.OctoAPI.controllers;
 
+import com.octopodius.OctoAPI.daos.UserRepository;
 import com.octopodius.OctoAPI.dtos.publication.req.PublicationCreateReqDTO;
 import com.octopodius.OctoAPI.entities.Publication;
+import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.services.api.publications.PublicationService;
+import com.octopodius.OctoAPI.services.api.users.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +22,12 @@ public class PublicationsController {
     @Autowired
     PublicationService service;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping
     public ResponseEntity<Publication> create(@RequestBody @Valid PublicationCreateReqDTO req) {
-        Publication pub = service.create(req);
+        Publication pub = service.create(userService.getUserInformation(), req);
         return ResponseEntity.status(HttpStatus.CREATED).body(pub);
     }
 }

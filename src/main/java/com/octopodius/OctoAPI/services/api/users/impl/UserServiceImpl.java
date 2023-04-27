@@ -8,6 +8,7 @@ import com.octopodius.OctoAPI.dtos.users.res.UserResDTO;
 import com.octopodius.OctoAPI.entities.Group;
 import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.enums.GroupTypeEnum;
+import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
 import com.octopodius.OctoAPI.services.api.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    JwtTokenService jwtTokenService;
 
     @Autowired
     UserRepository repository;
@@ -32,7 +36,7 @@ public class UserServiceImpl implements UserService {
     public UserRegisterResDTO createUser(UserRegisterReqDTO userDto) {
         User user = new User(userDto.username(), passwordEncoder.encode(userDto.password()), userDto.email(), groupRepository.findByName(GroupTypeEnum.USER));
         User registredUser = repository.save(user);
-        return new UserRegisterResDTO(registredUser.getId(), registredUser.getUsername(), registredUser.getEmail());
+        return new UserRegisterResDTO(registredUser.getUsername(), registredUser.getEmail());
     }
 
     @Override
@@ -52,5 +56,10 @@ public class UserServiceImpl implements UserService {
     public UserResDTO getUserByEmail(String email) {
         User user = (User) repository.findByEmail(email);
         return new UserResDTO(user.getId(), user.getUsername(), user.getEmail());
+    }
+
+    @Override
+    public User getUserInformation() {
+        return (User) repository.findByEmail(jwtTokenService.getUserEmail());
     }
 }

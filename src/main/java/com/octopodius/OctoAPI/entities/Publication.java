@@ -73,6 +73,7 @@ public class Publication {
         this.isActive = false;
     }
 
+    @Getter
     @Embeddable
     static public class PublicationsId implements Serializable {
         @Serial
