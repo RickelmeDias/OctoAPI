@@ -38,8 +38,10 @@ class OctoApiApplicationTests extends BaseTest {
 
 	@Autowired
 	JacksonTester<UserRegisterResDTO> userRegisterResJson;
+
+
 	@Test
-	@DisplayName("It should create user to tests. Returning 201 status, because it was using the controller.")
+	@DisplayName("It should create an user for tests.")
 	void createWithSuccess() throws Exception {
 		UserService mock = org.mockito.Mockito.mock(UserService.class);
 

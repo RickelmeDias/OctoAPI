@@ -3,6 +3,7 @@ package com.octopodius.OctoAPI.services.api.publications.impl;
 import com.octopodius.OctoAPI.daos.PublicationRepository;
 import com.octopodius.OctoAPI.daos.UserRepository;
 import com.octopodius.OctoAPI.dtos.publication.req.PublicationCreateReqDTO;
+import com.octopodius.OctoAPI.dtos.publication.res.PublicationCreatedResDTO;
 import com.octopodius.OctoAPI.entities.Publication;
 import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.security.jwt.JwtTokenService;
@@ -21,7 +22,7 @@ public class PublicationServiceImpl implements PublicationService {
     PublicationRepository repository;
 
     @Override
-    public Publication create(User userAuthor, PublicationCreateReqDTO publicationDto) {
+    public PublicationCreatedResDTO create(User userAuthor, PublicationCreateReqDTO publicationDto) {
         String sanitizedSlug = sanitizeSlug(publicationDto.slug());
         String sanitizedBody = sanitizeAgainstXSS(publicationDto.body());
 
@@ -33,7 +34,9 @@ public class PublicationServiceImpl implements PublicationService {
 
         Publication pub = new Publication(id, userAuthor, publicationDto.title(), sanitizedBody, publicationDto.category(), publicationDto.subCategory(),
                 publicationDto.tags(), true, null, null, null);
-        return repository.save(pub);
+        repository.save(pub);
+
+        return new PublicationCreatedResDTO(pub.getId(), pub.getTitle(), pub.getBody(), pub.getId().getSlug(), pub.getCategory(), pub.getSubCategory(), pub.getTags());
     }
 
     private String sanitizeAgainstXSS(String body) {

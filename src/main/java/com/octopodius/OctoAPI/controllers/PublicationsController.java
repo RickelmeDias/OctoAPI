@@ -2,6 +2,7 @@ package com.octopodius.OctoAPI.controllers;
 
 import com.octopodius.OctoAPI.daos.UserRepository;
 import com.octopodius.OctoAPI.dtos.publication.req.PublicationCreateReqDTO;
+import com.octopodius.OctoAPI.dtos.publication.res.PublicationCreatedResDTO;
 import com.octopodius.OctoAPI.entities.Publication;
 import com.octopodius.OctoAPI.entities.User;
 import com.octopodius.OctoAPI.services.api.publications.PublicationService;
@@ -26,8 +27,8 @@ public class PublicationsController {
     UserService userService;
 
     @PostMapping
-    public ResponseEntity<Publication> create(@RequestBody @Valid PublicationCreateReqDTO req) {
-        Publication pub = service.create(userService.getUserInformation(), req);
+    public ResponseEntity<PublicationCreatedResDTO> create(@RequestBody @Valid PublicationCreateReqDTO req) {
+        PublicationCreatedResDTO pub = service.create(userService.getUserInformation(), req);
         return ResponseEntity.status(HttpStatus.CREATED).body(pub);
     }
 }
